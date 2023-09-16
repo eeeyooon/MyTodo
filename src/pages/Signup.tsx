@@ -4,7 +4,7 @@ import styled from 'styled-components';
 function Signup() {
 	const naviagte = useNavigate();
 	return (
-		<div>
+		<SignupWrapper>
 			<SignupHeader>회원가입</SignupHeader>
 			<NavButton
 				onClick={() => {
@@ -20,11 +20,17 @@ function Signup() {
 			>
 				Todo
 			</NavButton>
-		</div>
+		</SignupWrapper>
 	);
 }
 
 export default Signup;
+
+const SignupWrapper = styled.div`
+	width: 375px;
+	height: 812px;
+	background-color: #fff;
+`;
 
 const SignupHeader = styled.h1`
 	color: blueviolet;
