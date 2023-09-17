@@ -5,6 +5,7 @@ import { GlobalStyles } from './style/global';
 import Signup from './pages/Signup';
 import Signin from './pages/Signin';
 import TodoList from './pages/TodoList';
+import NotFound from './pages/NotFound';
 
 function App() {
 	return (
@@ -16,6 +17,7 @@ function App() {
 					<Route path="/" element={<Navigate replace to="/signup" />} />
 					<Route path="/signin" element={<Signin />} />
 					<Route path="/todo" element={<TodoList />} />
+					<Route path="/*" element={<NotFound />} />
 				</Routes>
 			</BrowserRouter>
 		</ThemeProvider>
