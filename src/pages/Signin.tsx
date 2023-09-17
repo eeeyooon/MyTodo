@@ -60,6 +60,6 @@ const NavSignup = styled.div`
 `;
 
 const NavBtn = styled.button`
-	border-bottom: 1px solid rgba(0, 85, 255, 0.8);
+	text-decoration-line: underline;
 	color: rgba(0, 85, 255, 0.8);
 `;
