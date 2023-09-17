@@ -7,7 +7,7 @@ function Signin() {
 	return (
 		<SigninWrapper>
 			<SigninHeader>Sign in</SigninHeader>
-			<SignForm text={'Sign In'} />
+			<SignForm text={'Sign In'} url={'/signup'} />
 			<NavSignup>
 				<p>Don&apos;t have an account?</p>
 				<NavBtn

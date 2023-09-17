@@ -1,11 +1,14 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 type SignFormProps = {
 	text: string;
+	url: string;
 };
 
 function SignForm(props: SignFormProps) {
-	const { text } = props;
+	const { text, url } = props;
+	const navigate = useNavigate();
 	return (
 		<SignFormWrapper>
 			<FormBox>
@@ -23,7 +26,13 @@ function SignForm(props: SignFormProps) {
 					/>
 				</InputWrapper>
 			</FormBox>
-			<SignButton>{text}</SignButton>
+			<SignButton
+				onClick={() => {
+					navigate(url);
+				}}
+			>
+				{text}
+			</SignButton>
 		</SignFormWrapper>
 	);
 }

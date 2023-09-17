@@ -1,25 +1,23 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import SignForm from '../components/SignForm';
 
 function Signup() {
-	const naviagte = useNavigate();
+	const navigate = useNavigate();
 	return (
 		<SignupWrapper>
-			<SignupHeader>회원가입</SignupHeader>
-			<NavButton
-				onClick={() => {
-					naviagte('/signin');
-				}}
-			>
-				로그인
-			</NavButton>
-			<NavButton
-				onClick={() => {
-					naviagte('/todo');
-				}}
-			>
-				Todo
-			</NavButton>
+			<SignupHeader>Sign up</SignupHeader>
+			<SignForm text={'Sign up'} url={'/signup'} />
+			<NavSignin>
+				<p>Already have an account?</p>
+				<NavBtn
+					onClick={() => {
+						navigate('/signin');
+					}}
+				>
+					sign in
+				</NavBtn>
+			</NavSignin>
 		</SignupWrapper>
 	);
 }
@@ -30,19 +28,38 @@ const SignupWrapper = styled.div`
 	width: 375px;
 	height: 812px;
 	background-color: #fff;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
 `;
 
 const SignupHeader = styled.h1`
-	color: blueviolet;
-	font-size: ${({ theme }) => theme.fontSize['xl']};
-	font-weight: ${({ theme }) => theme.fontWeight.semibold};
+	width: 315px;
+	height: 47px;
+	font-weight: ${({ theme }) => theme.fontWeight.bold};
+	font-size: ${({ theme }) => theme.fontSize['5xl']};
+	color: #35383e;
+	display: flex;
+	align-items: flex-start;
+	margin-top: 164px;
+	margin-bottom: 57px;
 `;
 
-const NavButton = styled.button`
-	width: 100px;
-	padding: 8px;
-	background-color: bisque;
-	margin: 10px;
-	border-radius: 15px;
-	font-weight: ${({ theme }) => theme.fontWeight.semibold};
+const NavSignin = styled.div`
+	width: 270px;
+	height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 37px;
+
+	& p {
+		color: rgba(0, 0, 0, 0.6);
+		font-size: ${({ theme }) => theme.fontWeight.medium};
+	}
+`;
+
+const NavBtn = styled.button`
+	border-bottom: 1px solid rgba(0, 85, 255, 0.8);
+	color: rgba(0, 85, 255, 0.8);
 `;
