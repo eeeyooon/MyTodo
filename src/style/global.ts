@@ -26,7 +26,7 @@ export const GlobalStyles = createGlobalStyle`
     color: inherit;
   }
   button{
-    background: inherit ;
+    background: none ;
     border:none;
     box-shadow:none;
     border-radius:0;
