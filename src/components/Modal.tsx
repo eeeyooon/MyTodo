@@ -5,8 +5,8 @@ function Modal() {
 		<ModalWrapper>
 			<p>할 일을 삭제하시겠습니까?</p>
 			<BtnWrapper>
-				<button className="deleteBtn">취소</button>
-				<button className="cancelBtn">삭제</button>
+				<button className="deleteBtn">삭제</button>
+				<button className="cancelBtn">취소</button>
 			</BtnWrapper>
 		</ModalWrapper>
 	);
