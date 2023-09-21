@@ -27,6 +27,7 @@ function SignForm(props: SignFormProps) {
 							id="password-input"
 							data-testid="password-input"
 							placeholder="Enter Your Password"
+							autoComplete="off"
 						/>
 					</InputWrapper>
 				</FormBox>
@@ -100,7 +101,7 @@ const SignFormBox = styled.div`
 	justify-content: space-between;
 `;
 
-const FormBox = styled.div`
+const FormBox = styled.form`
 	width: 315px;
 	height: 174px;
 	display: flex;
