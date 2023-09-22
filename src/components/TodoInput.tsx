@@ -1,11 +1,24 @@
 import styled from 'styled-components';
 
-function TodoInput() {
+type InputProps = {
+	onChange: React.ChangeEventHandler<HTMLInputElement>;
+	todo: string;
+	handleCreateTodo: () => void;
+};
+
+function TodoInput(props: InputProps) {
+	const { onChange, todo, handleCreateTodo } = props;
 	return (
 		<TodoInputBox>
 			<TodoInputFormWrapper>
-				<TodoInputForm data-testid="new-todo-input" type="text" placeholder="Your Task Here..." />
-				<button data-testid="new-todo-add-button">
+				<TodoInputForm
+					data-testid="new-todo-input"
+					type="text"
+					placeholder="Your Task Here..."
+					onChange={onChange}
+					value={todo}
+				/>
+				<button data-testid="new-todo-add-button" onClick={handleCreateTodo}>
 					<img src={process.env.PUBLIC_URL + '/assets/send.svg'} alt="전송 아이콘" />
 				</button>
 			</TodoInputFormWrapper>

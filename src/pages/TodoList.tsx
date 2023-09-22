@@ -1,17 +1,42 @@
 import styled from 'styled-components';
 import TodoItem from '../components/TodoItem';
 import TodoInput from '../components/TodoInput';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createTodoApi, getTodosApi } from '../utils/api';
+
+type TodoItem = {
+	id: number;
+	todo: string;
+	isCompleted: boolean;
+};
 
 function TodoList() {
 	const token = localStorage.getItem('access_token');
 	const navigate = useNavigate();
 	const user = localStorage.getItem('userEmail');
+	const [todo, setTodo] = useState('');
+	const [todos, setTodos] = useState([]);
 
 	useEffect(() => {
 		if (!token) navigate('/signin');
 	}, [token]);
+
+	useEffect(() => {
+		getTodosApi()
+			.then((res) => {
+				setTodos(res.data);
+				console.log(res.data);
+			})
+			.catch((e) => console.error(e));
+	}, []);
+
+	const handleCreateTodo = () => {
+		createTodoApi(todo).then(() => {
+			setTodo('');
+			getTodosApi().then((res) => setTodos(res.data));
+		});
+	};
 
 	return (
 		<TodoListWrapper>
@@ -20,12 +45,18 @@ function TodoList() {
 				<p>{user}의 to do list입니다.</p>
 			</TodoHeaderWrapper>
 			<TodoItemWrapper>
-				<TodoItem />
-				<TodoItem />
-				<TodoItem />
+				{todos.map((todoItem: TodoItem) => {
+					return (
+						<TodoItem key={todoItem.id} id={todoItem.id} todo={todoItem.todo} isCompleted={todoItem.isCompleted} />
+					);
+				})}
 			</TodoItemWrapper>
 			<TodoInputWrapper>
-				<TodoInput />
+				<TodoInput
+					todo={todo}
+					handleCreateTodo={handleCreateTodo}
+					onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTodo(e.target.value)}
+				/>
 			</TodoInputWrapper>
 		</TodoListWrapper>
 	);

@@ -1,19 +1,38 @@
 import styled from 'styled-components';
 
-function TodoItem() {
+type TodoItemProps = {
+	id: number;
+	todo: string;
+	isCompleted: boolean;
+};
+
+type IsCompletedProp = {
+	$isCompleted: boolean;
+};
+function TodoItem(props: TodoItemProps) {
+	const { id, todo, isCompleted } = props;
+
 	return (
-		<TodoItemWrapper>
+		<TodoItemWrapper $isCompleted={isCompleted} key={id}>
 			<CheckBtn>
-				<img src={process.env.PUBLIC_URL + '/assets/check_disable.svg'} alt="미완료 아이콘" />
+				{isCompleted ? (
+					<img src={process.env.PUBLIC_URL + '/assets/checked.svg'} alt="완료 아이콘" />
+				) : (
+					<img src={process.env.PUBLIC_URL + '/assets/check.svg'} alt="미완료 아이콘" />
+				)}
 			</CheckBtn>
-			<p>오후 2시에 운동 가기</p>
+			<p>{todo}</p>
 			<UDBtnWrapper>
-				<UpdateBtn>
-					<img src={process.env.PUBLIC_URL + '/assets/edit.svg'} alt="수정 아이콘" />
-				</UpdateBtn>
-				<DeleteBtn>
-					<img src={process.env.PUBLIC_URL + '/assets/delete.svg'} alt="삭제 아이콘" />
-				</DeleteBtn>
+				{isCompleted ? null : (
+					<>
+						<UpdateBtn>
+							<img src={process.env.PUBLIC_URL + '/assets/edit.svg'} alt="수정 아이콘" />
+						</UpdateBtn>
+						<DeleteBtn>
+							<img src={process.env.PUBLIC_URL + '/assets/delete.svg'} alt="삭제 아이콘" />
+						</DeleteBtn>
+					</>
+				)}
 			</UDBtnWrapper>
 		</TodoItemWrapper>
 	);
@@ -21,13 +40,13 @@ function TodoItem() {
 
 export default TodoItem;
 
-const TodoItemWrapper = styled.div`
+const TodoItemWrapper = styled.div<IsCompletedProp>`
 	width: 345px;
 	height: 53px;
 	border-radius: 18px;
 	display: flex;
-	background-color: rgba(53, 56, 62, 0.05);
-	color: #35383e;
+	background-color: ${({ $isCompleted }) => ($isCompleted ? 'rgba(0, 85, 255, 0.1)' : 'rgba(53, 56, 62, 0.05)')};
+	color: ${({ $isCompleted }) => ($isCompleted ? '#2E74FF' : '#35383e')};
 	font-weight: ${({ theme }) => theme.fontWeight.bold};
 	align-items: center;
 	justify-content: space-between;
