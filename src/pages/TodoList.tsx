@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { createTodoApi, getTodosApi } from '../utils/api';
 import { TodoItemType } from '../types/todoItemType';
 import { TodosType } from '../types/todosType';
+import axiosInstance from '../utils/instance';
 
 function TodoList() {
 	const token = localStorage.getItem('access_token');
@@ -15,17 +16,28 @@ function TodoList() {
 	const [todos, setTodos] = useState<TodosType>([]);
 
 	useEffect(() => {
-		if (!token) navigate('/signin');
+		if (token) {
+			getTodosApi()
+				.then((res) => {
+					setTodos(res.data);
+					console.log(res.data);
+					// console.log(token);
+					axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+				})
+				.catch((e) => console.error(e));
+		} else {
+			navigate('/signin');
+		}
 	}, [token]);
 
-	useEffect(() => {
-		getTodosApi()
-			.then((res) => {
-				setTodos(res.data);
-				console.log(res.data);
-			})
-			.catch((e) => console.error(e));
-	}, []);
+	// useEffect(() => {
+	// 	getTodosApi()
+	// 		.then((res) => {
+	// 			setTodos(res.data);
+	// 			console.log(res.data);
+	// 		})
+	// 		.catch((e) => console.error(e));
+	// }, []);
 
 	const handleCreateTodo = () => {
 		createTodoApi(todo).then(() => {

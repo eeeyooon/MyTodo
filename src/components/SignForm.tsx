@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { signinApi, signupApi } from '../utils/api';
 import isEmailValid from '../utils/isEmailValid';
 import isPasswordVaild from '../utils/isPasswordVaild';
+import axios from 'axios';
+import axiosInstance from '../utils/instance';
 
 type SignFormProps = {
 	page: string;
@@ -29,6 +31,7 @@ function SignForm(props: SignFormProps) {
 			.then((res) => {
 				console.log(email, password);
 				console.log(res.status === 201 ? '회원가입을 성공하였습니다.' : '회원가입을 실패하였습니다.');
+				alert(res.status === 201 ? '회원가입을 성공하였습니다.' : '회원가입을 실패하였습니다.');
 				navigate('/signin');
 			})
 			.catch((e) => console.error(e.response.data.message));
@@ -41,6 +44,7 @@ function SignForm(props: SignFormProps) {
 			.then((res) => {
 				localStorage.setItem('access_token', res.data.access_token);
 				localStorage.setItem('userEmail', email.slice(0, email.indexOf('@')));
+				axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${res.data.access_token}`;
 				navigate('/todo');
 			})
 			.catch((e) => console.error(e));

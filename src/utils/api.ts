@@ -1,5 +1,8 @@
 import axiosInstance from './instance';
 
+const token = localStorage.getItem('access_token');
+console.log(token);
+
 type SignProps = {
 	email: string;
 	password: string;
@@ -16,7 +19,9 @@ const createTodoApi = (todo: string) => {
 	return axiosInstance.post('/todos', { todo });
 };
 const getTodosApi = () => {
-	return axiosInstance.get('/todos');
+	return token !== null
+		? axiosInstance.get('/todos', { headers: { Authorization: `Bearer ${token}` } })
+		: axiosInstance.get('/todos');
 };
 
 const updateTodoApi = (id: number, todo: string, isCompleted: boolean) =>
