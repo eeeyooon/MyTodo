@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { signinApi, signupApi } from '../utils/api';
+import isEmailValid from '../utils/isEmailValid';
+import isPasswordVaild from '../utils/isPasswordVaild';
 
 type SignFormProps = {
 	page: string;
@@ -13,6 +15,7 @@ function SignForm(props: SignFormProps) {
 	const navigate = useNavigate();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+
 	const token = localStorage.getItem('access_token');
 
 	useEffect(() => {
@@ -20,8 +23,10 @@ function SignForm(props: SignFormProps) {
 		if (token) navigate('/todo');
 	}, [token]);
 
-	const handleSignup = () => {
-		signupApi({ email, password })
+	const handleSignup = async (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+
+		await signupApi({ email, password })
 			.then((res) => {
 				console.log(email, password);
 				console.log(res.status === 201 ? '회원가입을 성공하였습니다.' : '회원가입을 실패하였습니다.');
@@ -30,8 +35,10 @@ function SignForm(props: SignFormProps) {
 			.catch((e) => console.error(e.response.data.message));
 	};
 
-	const handleSignin = () => {
-		signinApi({ email, password })
+	const handleSignin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+
+		await signinApi({ email, password })
 			.then((res) => {
 				localStorage.setItem('access_token', res.data.access_token);
 				navigate('/todo');
@@ -54,6 +61,7 @@ function SignForm(props: SignFormProps) {
 							onChange={(e) => setEmail(e.target.value)}
 							placeholder="example@gamil.com"
 						/>
+						{email && !isEmailValid(email) ? <p>이메일 형식을 확인해주세요</p> : null}
 					</InputWrapper>
 					<InputWrapper>
 						<Label htmlFor="password-input">Password</Label>
@@ -65,6 +73,7 @@ function SignForm(props: SignFormProps) {
 							placeholder="Enter Your Password"
 							autoComplete="off"
 						/>
+						{password && !isPasswordVaild(password) ? <p>비밀번호는 8글자 이상이어야 합니다.</p> : null}
 					</InputWrapper>
 				</FormBox>
 				<SignButton onClick={page === 'signin' ? handleSignin : handleSignup} data-testid={page + '-button'}>
