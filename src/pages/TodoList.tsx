@@ -1,8 +1,17 @@
 import styled from 'styled-components';
 import TodoItem from '../components/TodoItem';
 import TodoInput from '../components/TodoInput';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function TodoList() {
+	const token = localStorage.getItem('access_token');
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (!token) navigate('/signin');
+	}, [token]);
+
 	return (
 		<TodoListWrapper>
 			<TodoHeaderWrapper>
