@@ -5,12 +5,6 @@ type SignProps = {
 	password: string;
 };
 
-type TodoProps = {
-	id: number;
-	todo: string;
-	isCompleted: boolean;
-};
-
 const signupApi = ({ email, password }: SignProps) => {
 	console.log(email, password);
 	return axiosInstance.post('/auth/signup', { email, password });
@@ -25,7 +19,7 @@ const getTodosApi = () => {
 	return axiosInstance.get('/todos');
 };
 
-const updateTodoApi = ({ id, todo, isCompleted }: TodoProps) =>
+const updateTodoApi = (id: number, todo: string, isCompleted: boolean) =>
 	axiosInstance.put(`/todos/${id}`, {
 		todo,
 		isCompleted,
