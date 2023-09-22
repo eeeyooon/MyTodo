@@ -41,7 +41,7 @@ function TodoList() {
 			</TodoHeaderWrapper>
 			<TodoItemWrapper>
 				{todos.map((todoItem: TodoItemType) => {
-					return <TodoItem key={todoItem.id} todo={todoItem} />;
+					return <TodoItem key={todoItem.id} todoData={todoItem} />;
 				})}
 			</TodoItemWrapper>
 			<TodoInputWrapper>
