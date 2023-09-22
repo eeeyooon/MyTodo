@@ -40,8 +40,8 @@ function SignForm(props: SignFormProps) {
 		await signinApi({ email, password })
 			.then((res) => {
 				localStorage.setItem('access_token', res.data.access_token);
+				localStorage.setItem('userEmail', email.slice(0, email.indexOf('@')));
 				navigate('/todo');
-				console.log(res.data);
 			})
 			.catch((e) => console.error(e));
 	};

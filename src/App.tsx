@@ -14,7 +14,7 @@ function App() {
 			<BrowserRouter>
 				<Routes>
 					<Route path="/signup" element={<Signup />} />
-					<Route path="/" element={<Navigate replace to="/signup" />} />
+					<Route path="/" element={<Navigate replace to="/signin" />} />
 					<Route path="/signin" element={<Signin />} />
 					<Route path="/todo" element={<TodoList />} />
 					<Route path="/*" element={<NotFound />} />

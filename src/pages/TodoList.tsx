@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 function TodoList() {
 	const token = localStorage.getItem('access_token');
 	const navigate = useNavigate();
+	const user = localStorage.getItem('userEmail');
 
 	useEffect(() => {
 		if (!token) navigate('/signin');
@@ -16,7 +17,7 @@ function TodoList() {
 		<TodoListWrapper>
 			<TodoHeaderWrapper>
 				<TodoHeader>Todo List</TodoHeader>
-				<p>User의 to do list입니다.</p>
+				<p>{user}의 to do list입니다.</p>
 			</TodoHeaderWrapper>
 			<TodoItemWrapper>
 				<TodoItem />
