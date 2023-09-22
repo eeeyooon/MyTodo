@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { signinApi, signupApi } from '../utils/api';
 
 type SignFormProps = {
 	page: string;
@@ -9,6 +11,35 @@ type SignFormProps = {
 function SignForm(props: SignFormProps) {
 	const { page, navText } = props;
 	const navigate = useNavigate();
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const token = localStorage.getItem('access_token');
+
+	useEffect(() => {
+		console.log(token);
+		if (token) navigate('/todo');
+	}, [token]);
+
+	const handleSignup = () => {
+		signupApi({ email, password })
+			.then((res) => {
+				console.log(email, password);
+				console.log(res.status === 201 ? '회원가입을 성공하였습니다.' : '회원가입을 실패하였습니다.');
+				navigate('/signin');
+			})
+			.catch((e) => console.error(e.response.data.message));
+	};
+
+	const handleSignin = () => {
+		signinApi({ email, password })
+			.then((res) => {
+				localStorage.setItem('access_token', res.data.access_token);
+				navigate('/todo');
+				console.log(res.data);
+			})
+			.catch((e) => console.error(e));
+	};
+
 	return (
 		<SignFormWrapper>
 			<SignupHeader>{page === 'signin' ? 'Sign In' : 'Sign Up'}</SignupHeader>
@@ -16,7 +47,13 @@ function SignForm(props: SignFormProps) {
 				<FormBox>
 					<InputWrapper>
 						<Label htmlFor="email-input">Email</Label>
-						<InputBox type="email" id="email-input" data-testid="email-input" placeholder="example@gamil.com" />
+						<InputBox
+							type="email"
+							id="email-input"
+							data-testid="email-input"
+							onChange={(e) => setEmail(e.target.value)}
+							placeholder="example@gamil.com"
+						/>
 					</InputWrapper>
 					<InputWrapper>
 						<Label htmlFor="password-input">Password</Label>
@@ -24,12 +61,15 @@ function SignForm(props: SignFormProps) {
 							type="password"
 							id="password-input"
 							data-testid="password-input"
+							onChange={(e) => setPassword(e.target.value)}
 							placeholder="Enter Your Password"
 							autoComplete="off"
 						/>
 					</InputWrapper>
 				</FormBox>
-				<SignButton data-testid={page + '-button'}>{page === 'signin' ? 'Sign In' : 'Sign Up'}</SignButton>
+				<SignButton onClick={page === 'signin' ? handleSignin : handleSignup} data-testid={page + '-button'}>
+					{page === 'signin' ? 'Sign In' : 'Sign Up'}
+				</SignButton>
 			</SignFormBox>
 			<NavSign>
 				<p>{navText}</p>

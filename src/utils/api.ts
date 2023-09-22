@@ -5,7 +5,10 @@ type ApiProps = {
 	password: string;
 };
 
-const signupApi = ({ email, password }: ApiProps) => axiosInstance.post('/auth/signup', { email, password });
+const signupApi = ({ email, password }: ApiProps) => {
+	console.log(email, password);
+	return axiosInstance.post('/auth/signup', { email, password });
+};
 
 const signinApi = ({ email, password }: ApiProps) => axiosInstance.post('/auth/signin', { email, password });
 
