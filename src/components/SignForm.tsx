@@ -19,7 +19,6 @@ function SignForm(props: SignFormProps) {
 	const token = localStorage.getItem('access_token');
 
 	useEffect(() => {
-		console.log(token);
 		if (token) navigate('/todo');
 	}, [token]);
 
@@ -61,7 +60,7 @@ function SignForm(props: SignFormProps) {
 							onChange={(e) => setEmail(e.target.value)}
 							placeholder="example@gamil.com"
 						/>
-						{email && !isEmailValid(email) ? <p>이메일 형식을 확인해주세요</p> : null}
+						{email && !isEmailValid(email) ? <ErrorMsg>이메일 형식을 확인해주세요.</ErrorMsg> : null}
 					</InputWrapper>
 					<InputWrapper>
 						<Label htmlFor="password-input">Password</Label>
@@ -73,10 +72,14 @@ function SignForm(props: SignFormProps) {
 							placeholder="Enter Your Password"
 							autoComplete="off"
 						/>
-						{password && !isPasswordVaild(password) ? <p>비밀번호는 8글자 이상이어야 합니다.</p> : null}
+						{password && !isPasswordVaild(password) ? <ErrorMsg>비밀번호는 8자 이상이어야 합니다.</ErrorMsg> : null}
 					</InputWrapper>
 				</FormBox>
-				<SignButton onClick={page === 'signin' ? handleSignin : handleSignup} data-testid={page + '-button'}>
+				<SignButton
+					onClick={page === 'signin' ? handleSignin : handleSignup}
+					data-testid={page + '-button'}
+					disabled={!isEmailValid(email) || !isPasswordVaild(password)}
+				>
 					{page === 'signin' ? 'Sign In' : 'Sign Up'}
 				</SignButton>
 			</SignFormBox>
@@ -136,7 +139,7 @@ const NavBtn = styled.button`
 
 const SignFormBox = styled.div`
 	width: 315px;
-	height: 253px;
+	height: 273px;
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: space-between;
@@ -144,7 +147,7 @@ const SignFormBox = styled.div`
 
 const FormBox = styled.form`
 	width: 315px;
-	height: 174px;
+	height: 210px;
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: space-between;
@@ -152,21 +155,22 @@ const FormBox = styled.form`
 
 const InputWrapper = styled.div`
 	width: 315px;
-	height: 80px;
+	height: 100px;
 	display: flex;
 	flex-flow: column nowrap;
-	justify-content: space-between;
+	justify-content: flex-start;
 `;
 
 const Label = styled.label`
 	color: #695c5c;
 	font-size: ${({ theme }) => theme.fontSize.xl};
 	padding-left: 8px;
+	margin-bottom: 5px;
 `;
 
 const InputBox = styled.input`
 	width: 312px;
-	height: 53px;
+	height: 50px;
 	border-radius: 18px;
 	border: 1px solid rgba(0, 0, 0, 0.4);
 	padding-left: 12px;
@@ -182,4 +186,11 @@ const SignButton = styled.button`
 	border-radius: 18px;
 	color: #fff;
 	background: rgba(0, 85, 255, 0.8);
+`;
+
+const ErrorMsg = styled.p`
+	padding-left: 5px;
+	padding-top: 5px;
+	height: 25px;
+	color: rgba(0, 85, 255, 0.8);
 `;
