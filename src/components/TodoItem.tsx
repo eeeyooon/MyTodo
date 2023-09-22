@@ -1,9 +1,12 @@
 import styled from 'styled-components';
 import { TodoItemType } from '../types/todoItemType';
 import { useState } from 'react';
+import { deleteTodoApi, getTodosApi } from '../utils/api';
+import { TodosType } from '../types/todosType';
 
 type TodoItemProps = {
 	todoData: TodoItemType;
+	setTodos: React.Dispatch<React.SetStateAction<TodosType>>;
 };
 
 type IsCompletedProp = {
@@ -11,8 +14,20 @@ type IsCompletedProp = {
 };
 
 function TodoItem(props: TodoItemProps) {
-	const { todoData } = props;
+	const { todoData, setTodos } = props;
 	const { id, todo, isCompleted } = todoData;
+	const [newTodo, setNewTodo] = useState('');
+	const [isEdit, setIsEdit] = useState(false);
+
+	const handleDeleteTodo = (id: number) => {
+		deleteTodoApi(id)
+			.then(() =>
+				getTodosApi()
+					.then((res) => setTodos(res.data))
+					.catch((e) => console.error(e)),
+			)
+			.catch((e) => console.error(e));
+	};
 
 	return (
 		<TodoItemWrapper $isCompleted={isCompleted}>
@@ -30,7 +45,7 @@ function TodoItem(props: TodoItemProps) {
 						<UpdateBtn>
 							<img src={process.env.PUBLIC_URL + '/assets/edit.svg'} alt="수정 아이콘" />
 						</UpdateBtn>
-						<DeleteBtn>
+						<DeleteBtn onClick={() => handleDeleteTodo(id)}>
 							<img src={process.env.PUBLIC_URL + '/assets/delete.svg'} alt="삭제 아이콘" />
 						</DeleteBtn>
 					</>

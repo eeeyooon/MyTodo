@@ -5,13 +5,14 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createTodoApi, getTodosApi } from '../utils/api';
 import { TodoItemType } from '../types/todoItemType';
+import { TodosType } from '../types/todosType';
 
 function TodoList() {
 	const token = localStorage.getItem('access_token');
 	const navigate = useNavigate();
 	const user = localStorage.getItem('userEmail');
 	const [todo, setTodo] = useState('');
-	const [todos, setTodos] = useState([]);
+	const [todos, setTodos] = useState<TodosType>([]);
 
 	useEffect(() => {
 		if (!token) navigate('/signin');
@@ -41,7 +42,7 @@ function TodoList() {
 			</TodoHeaderWrapper>
 			<TodoItemWrapper>
 				{todos.map((todoItem: TodoItemType) => {
-					return <TodoItem key={todoItem.id} todoData={todoItem} />;
+					return <TodoItem key={todoItem.id} todoData={todoItem} setTodos={setTodos} />;
 				})}
 			</TodoItemWrapper>
 			<TodoInputWrapper>
