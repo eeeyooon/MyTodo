@@ -42,10 +42,10 @@ function TodoItem(props: TodoItemProps) {
 			<UDBtnWrapper>
 				{isCompleted ? null : (
 					<>
-						<UpdateBtn>
+						<UpdateBtn data-testid="modify-button">
 							<img src={process.env.PUBLIC_URL + '/assets/edit.svg'} alt="수정 아이콘" />
 						</UpdateBtn>
-						<DeleteBtn onClick={() => handleDeleteTodo(id)}>
+						<DeleteBtn data-testid="delete-button" onClick={() => handleDeleteTodo(id)}>
 							<img src={process.env.PUBLIC_URL + '/assets/delete.svg'} alt="삭제 아이콘" />
 						</DeleteBtn>
 					</>
