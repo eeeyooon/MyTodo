@@ -18,19 +18,19 @@ const signupApi = ({ email, password }: SignProps) => {
 
 const signinApi = ({ email, password }: SignProps) => axiosInstance.post('/auth/signin', { email, password });
 
-const CreateTodoApi = (todo: string) => {
-	axiosInstance.post('/todos', { todo });
+const createTodoApi = (todo: string) => {
+	return axiosInstance.post('/todos', { todo });
 };
-const GetTodosApi = () => {
-	axiosInstance.get('/todos');
+const getTodosApi = () => {
+	return axiosInstance.get('/todos');
 };
 
-const UpdateTodoApi = ({ id, todo, isCompleted }: TodoProps) =>
+const updateTodoApi = ({ id, todo, isCompleted }: TodoProps) =>
 	axiosInstance.put(`/todos/${id}`, {
 		todo,
 		isCompleted,
 	});
 
-const DeleteTodoApi = (id: number) => axiosInstance.delete(`/todos/${id}`);
+const deleteTodoApi = (id: number) => axiosInstance.delete(`/todos/${id}`);
 
-export { signupApi, signinApi, CreateTodoApi, GetTodosApi, UpdateTodoApi, DeleteTodoApi };
+export { signupApi, signinApi, createTodoApi, getTodosApi, updateTodoApi, deleteTodoApi };
