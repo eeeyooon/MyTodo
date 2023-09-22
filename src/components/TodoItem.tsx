@@ -1,29 +1,28 @@
 import styled from 'styled-components';
+import { TodoItemType } from '../types/todoItemType';
 
 type TodoItemProps = {
-	id: number;
-	todo: string;
-	isCompleted: boolean;
+	todo: TodoItemType;
 };
 
 type IsCompletedProp = {
 	$isCompleted: boolean;
 };
 function TodoItem(props: TodoItemProps) {
-	const { id, todo, isCompleted } = props;
+	const { todo } = props;
 
 	return (
-		<TodoItemWrapper $isCompleted={isCompleted} key={id}>
+		<TodoItemWrapper $isCompleted={todo.isCompleted}>
 			<CheckBtn>
-				{isCompleted ? (
+				{todo.isCompleted ? (
 					<img src={process.env.PUBLIC_URL + '/assets/checked.svg'} alt="완료 아이콘" />
 				) : (
 					<img src={process.env.PUBLIC_URL + '/assets/check.svg'} alt="미완료 아이콘" />
 				)}
 			</CheckBtn>
-			<p>{todo}</p>
+			<p>{todo.todo}</p>
 			<UDBtnWrapper>
-				{isCompleted ? null : (
+				{todo.isCompleted ? null : (
 					<>
 						<UpdateBtn>
 							<img src={process.env.PUBLIC_URL + '/assets/edit.svg'} alt="수정 아이콘" />

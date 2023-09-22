@@ -4,12 +4,7 @@ import TodoInput from '../components/TodoInput';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createTodoApi, getTodosApi } from '../utils/api';
-
-type TodoItem = {
-	id: number;
-	todo: string;
-	isCompleted: boolean;
-};
+import { TodoItemType } from '../types/todoItemType';
 
 function TodoList() {
 	const token = localStorage.getItem('access_token');
@@ -45,10 +40,8 @@ function TodoList() {
 				<p>{user}의 to do list입니다.</p>
 			</TodoHeaderWrapper>
 			<TodoItemWrapper>
-				{todos.map((todoItem: TodoItem) => {
-					return (
-						<TodoItem key={todoItem.id} id={todoItem.id} todo={todoItem.todo} isCompleted={todoItem.isCompleted} />
-					);
+				{todos.map((todoItem: TodoItemType) => {
+					return <TodoItem key={todoItem.id} todo={todoItem} />;
 				})}
 			</TodoItemWrapper>
 			<TodoInputWrapper>
