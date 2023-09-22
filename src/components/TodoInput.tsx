@@ -4,8 +4,8 @@ function TodoInput() {
 	return (
 		<TodoInputBox>
 			<TodoInputFormWrapper>
-				<TodoInputForm type="text" placeholder="Your Task Here..." />
-				<button>
+				<TodoInputForm data-testid="new-todo-input" type="text" placeholder="Your Task Here..." />
+				<button data-testid="new-todo-add-button">
 					<img src={process.env.PUBLIC_URL + '/assets/send.svg'} alt="전송 아이콘" />
 				</button>
 			</TodoInputFormWrapper>

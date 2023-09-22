@@ -4,7 +4,7 @@ import SignForm from '../components/SignForm';
 function Signup() {
 	return (
 		<SignupWrapper>
-			<SignForm text={'Sign up'} url={'/signup'} navText={'Already have an account?'} navTo={'signin'} />
+			<SignForm page={'signup'} navText={'Already have an account?'} />
 		</SignupWrapper>
 	);
 }

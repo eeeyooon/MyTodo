@@ -2,18 +2,16 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 type SignFormProps = {
-	text: string;
-	url: string;
+	page: string;
 	navText: string;
-	navTo: string;
 };
 
 function SignForm(props: SignFormProps) {
-	const { text, url, navTo, navText } = props;
+	const { page, navText } = props;
 	const navigate = useNavigate();
 	return (
 		<SignFormWrapper>
-			<SignupHeader>{text}</SignupHeader>
+			<SignupHeader>{page === 'signin' ? 'Sign In' : 'Sign Up'}</SignupHeader>
 			<SignFormBox>
 				<FormBox>
 					<InputWrapper>
@@ -31,22 +29,16 @@ function SignForm(props: SignFormProps) {
 						/>
 					</InputWrapper>
 				</FormBox>
-				<SignButton
-					onClick={() => {
-						navigate(url);
-					}}
-				>
-					{text}
-				</SignButton>
+				<SignButton data-testid={page + '-button'}>{page === 'signin' ? 'Sign In' : 'Sign Up'}</SignButton>
 			</SignFormBox>
 			<NavSign>
 				<p>{navText}</p>
 				<NavBtn
 					onClick={() => {
-						navigate(`/${navTo}`);
+						page === 'signin' ? navigate('/signup') : navigate('/signin');
 					}}
 				>
-					{navTo}
+					{page === 'signin' ? 'signup' : 'signin'}
 				</NavBtn>
 			</NavSign>
 		</SignFormWrapper>
