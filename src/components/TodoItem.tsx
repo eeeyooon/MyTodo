@@ -65,10 +65,10 @@ function TodoItem(props: TodoItemProps) {
 							data-testid="submit-button"
 							onClick={() => (newTodo !== todo ? handleUpdateTodo(id, newTodo, isCompleted) : setIsEdit(0))}
 						>
-							<img src={process.env.PUBLIC_URL + '/assets/edit.svg'} alt="제출 아이콘" />
+							<img src={process.env.PUBLIC_URL + '/assets/update.svg'} alt="제출 아이콘" />
 						</SubmitBtn>
 						<CancelBtn data-testid="cancel-button" onClick={() => setIsEdit(0)}>
-							<img src={process.env.PUBLIC_URL + '/assets/delete.svg'} alt="취소 아이콘" />
+							<img src={process.env.PUBLIC_URL + '/assets/cancel.svg'} alt="취소 아이콘" />
 						</CancelBtn>
 					</>
 				) : (

@@ -1,5 +1,7 @@
 <svg width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect y="0.5" width="30" height="30" rx="11.25" fill="#35383E" fill-opacity="0.1"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M15 17.0152L19.5457 21.5609L21.0609 20.0457L16.5152 15.5L21.0609 10.9543L19.5457 9.43909L15 13.9848L10.4543 9.43909L8.93906 10.9543L13.4847 15.5L8.93906 20.0457L10.4543 21.5609L15 17.0152ZM15 17.0152L16.5152 15.5L15 13.9848L13.4847 15.5L15 17.0152Z" fill="#35383E" fill-opacity="0.25"/>
-<path d="M15 17.0152L16.5152 15.5L15 13.9848L13.4847 15.5L15 17.0152Z" fill="#35383E" fill-opacity="0.25"/>
+<path d="M20.0556 14.7778V21.5667C20.0556 21.806 19.8616 22 19.6222 22H10.3778C10.1385 22 9.94446 21.806 9.94446 21.5667V14.7778" stroke="#35383E" stroke-opacity="0.35" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13.5555 19.1111V14.7778" stroke="#35383E" stroke-opacity="0.35" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16.4445 19.1111V14.7778" stroke="#35383E" stroke-opacity="0.35" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M21.5 11.8889H17.8889M17.8889 11.8889V9.43333C17.8889 9.19401 17.6949 9 17.4556 9H12.5444C12.3051 9 12.1111 9.19401 12.1111 9.43333V11.8889M17.8889 11.8889H12.1111M8.5 11.8889H12.1111" stroke="#35383E" stroke-opacity="0.35" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
