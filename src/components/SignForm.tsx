@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { signinApi, signupApi } from '../utils/api';
 import isEmailValid from '../utils/isEmailValid';
 import isPasswordVaild from '../utils/isPasswordVaild';
-import axios from 'axios';
 import axiosInstance from '../utils/instance';
 
 type SignFormProps = {

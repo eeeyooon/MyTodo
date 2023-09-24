@@ -16,7 +16,7 @@ type IsCompletedProp = {
 function TodoItem(props: TodoItemProps) {
 	const { todoData, setTodos } = props;
 	const { id, todo, isCompleted } = todoData;
-	const [newTodo, setNewTodo] = useState('');
+	const [newTodo, setNewTodo] = useState(todo);
 	const [isEdit, setIsEdit] = useState(0);
 
 	const handleDeleteTodo = (id: number) => {
@@ -48,14 +48,14 @@ function TodoItem(props: TodoItemProps) {
 				</CheckBtn>
 			)}
 			{isEdit === id ? (
-				<input
+				<EditInput
 					type="text"
 					data-testid="modify-input"
 					defaultValue={todo}
 					onChange={(e) => setNewTodo(e.target.value)}
 				/>
 			) : (
-				<p>{todo}</p>
+				<TodoContent>{todo}</TodoContent>
 			)}
 
 			<UDBtnWrapper>
@@ -110,6 +110,21 @@ const CheckBtn = styled.button`
 	width: 30px;
 `;
 
+const TodoContent = styled.p`
+	line-height: 18px;
+	display: flex;
+	align-items: center;
+	height: 45px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	overflow-x: hidden;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+`;
+
 const UDBtnWrapper = styled.div`
 	width: 65px;
 	display: flex;
@@ -117,9 +132,16 @@ const UDBtnWrapper = styled.div`
 	margin-right: 11px;
 `;
 
+const EditInput = styled.input`
+	border: none;
+	background-color: rgba(53, 56, 62, 0);
+	margin-left: 25px;
+	outline: none;
+	border-bottom: 2px solid rgba(53, 56, 62, 0.3);
+	padding-bottom: 2px;
+`;
+
 const UpdateBtn = styled.button``;
-
 const DeleteBtn = styled.button``;
-
 const SubmitBtn = styled.button``;
 const CancelBtn = styled.button``;

@@ -1,7 +1,6 @@
 import axiosInstance from './instance';
 
 const token = localStorage.getItem('access_token');
-console.log(token);
 
 type SignProps = {
 	email: string;

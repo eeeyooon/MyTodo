@@ -20,8 +20,6 @@ function TodoList() {
 			getTodosApi()
 				.then((res) => {
 					setTodos(res.data);
-					console.log(res.data);
-					// console.log(token);
 					axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 				})
 				.catch((e) => console.error(e));
@@ -29,15 +27,6 @@ function TodoList() {
 			navigate('/signin');
 		}
 	}, [token]);
-
-	// useEffect(() => {
-	// 	getTodosApi()
-	// 		.then((res) => {
-	// 			setTodos(res.data);
-	// 			console.log(res.data);
-	// 		})
-	// 		.catch((e) => console.error(e));
-	// }, []);
 
 	const handleCreateTodo = () => {
 		createTodoApi(todo).then(() => {
