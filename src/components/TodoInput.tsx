@@ -17,6 +17,7 @@ function TodoInput(props: InputProps) {
 			<TodoInputFormWrapper>
 				<TodoInputForm
 					data-testid="new-todo-input"
+					name="new-todo-input"
 					type="text"
 					placeholder="Your Task Here..."
 					onChange={onChange}

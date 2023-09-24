@@ -39,7 +39,7 @@ function TodoItem(props: TodoItemProps) {
 	return (
 		<TodoItemWrapper $isCompleted={isCompleted}>
 			{isEdit === id ? null : (
-				<CheckBtn>
+				<CheckBtn onClick={() => handleUpdateTodo(id, todo, !isCompleted)}>
 					{isCompleted ? (
 						<img src={process.env.PUBLIC_URL + '/assets/checked.svg'} alt="완료 아이콘" />
 					) : (
@@ -50,6 +50,7 @@ function TodoItem(props: TodoItemProps) {
 			{isEdit === id ? (
 				<EditInput
 					type="text"
+					name="modify-input"
 					data-testid="modify-input"
 					defaultValue={todo}
 					onChange={(e) => setNewTodo(e.target.value)}
