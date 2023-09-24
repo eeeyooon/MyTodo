@@ -39,7 +39,7 @@ function TodoList() {
 		<TodoListWrapper>
 			<TodoHeaderWrapper>
 				<TodoHeader>Todo List</TodoHeader>
-				<p>{user}의 to do list입니다.</p>
+				<p>{user}</p>
 			</TodoHeaderWrapper>
 			<TodoItemWrapper>
 				{todos.map((todoItem: TodoItemType) => {
@@ -80,7 +80,8 @@ const TodoHeaderWrapper = styled.div`
 		font-weight: ${({ theme }) => theme.fontWeight.bold};
 		font-size: ${({ theme }) => theme.fontSize['xl']};
 		color: rgba(53, 56, 62, 0.5);
-		margin-left: 5px;
+		color: rgba(0, 85, 255, 0.6);
+		margin-left: 10px;
 	}
 `;
 

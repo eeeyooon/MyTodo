@@ -62,21 +62,22 @@ function TodoItem(props: TodoItemProps) {
 				{isCompleted ? null : isEdit ? (
 					<>
 						<SubmitBtn
+							className="button"
 							data-testid="submit-button"
 							onClick={() => (newTodo !== todo ? handleUpdateTodo(id, newTodo, isCompleted) : setIsEdit(0))}
 						>
 							<img src={process.env.PUBLIC_URL + '/assets/update.svg'} alt="제출 아이콘" />
 						</SubmitBtn>
-						<CancelBtn data-testid="cancel-button" onClick={() => setIsEdit(0)}>
+						<CancelBtn className="button" data-testid="cancel-button" onClick={() => setIsEdit(0)}>
 							<img src={process.env.PUBLIC_URL + '/assets/cancel.svg'} alt="취소 아이콘" />
 						</CancelBtn>
 					</>
 				) : (
 					<>
-						<UpdateBtn data-testid="modify-button" onClick={() => setIsEdit(id)}>
+						<UpdateBtn className="button" data-testid="modify-button" onClick={() => setIsEdit(id)}>
 							<img src={process.env.PUBLIC_URL + '/assets/edit.svg'} alt="수정 아이콘" />
 						</UpdateBtn>
-						<DeleteBtn data-testid="delete-button" onClick={() => handleDeleteTodo(id)}>
+						<DeleteBtn className="button" data-testid="delete-button" onClick={() => handleDeleteTodo(id)}>
 							<img src={process.env.PUBLIC_URL + '/assets/delete.svg'} alt="삭제 아이콘" />
 						</DeleteBtn>
 					</>
@@ -103,6 +104,13 @@ const TodoItemWrapper = styled.div<IsCompletedProp>`
 	p {
 		width: 190px;
 	}
+
+	.button > img {
+		&:hover {
+			background-color: rgba(0, 85, 255, 0.2);
+			border-radius: 12px;
+		}
+	}
 `;
 
 const CheckBtn = styled.button`
@@ -117,6 +125,7 @@ const TodoContent = styled.p`
 	height: 45px;
 	padding-top: 4px;
 	padding-bottom: 4px;
+	color: #35383e;
 	overflow-x: hidden;
 	-ms-overflow-style: none;
 	scrollbar-width: none;
@@ -135,10 +144,9 @@ const UDBtnWrapper = styled.div`
 const EditInput = styled.input`
 	border: none;
 	background-color: rgba(53, 56, 62, 0);
-	margin-left: 25px;
+	margin-left: 20px;
 	outline: none;
-	border-bottom: 2px solid rgba(53, 56, 62, 0.3);
-	padding-bottom: 2px;
+	border-bottom: 2px solid rgba(0, 85, 255, 0.5);
 `;
 
 const UpdateBtn = styled.button``;

@@ -47,12 +47,12 @@ const TodoInputFormWrapper = styled.div`
 const TodoInputForm = styled.input`
 	border: none;
 	width: 300px;
-	font-size: ${({ theme }) => theme.fontSize['2xl']};
+	font-size: ${({ theme }) => theme.fontSize['xl']};
 	font-weight: ${({ theme }) => theme.fontWeight.bold};
-	color: rgba(53, 56, 62, 0.5);
+	color: #35383e;
 	outline: none;
 
 	::placeholder {
-		color: rgba(53, 56, 62, 0.5);
+		color: rgba(53, 56, 62, 0.8);
 	}
 `;
