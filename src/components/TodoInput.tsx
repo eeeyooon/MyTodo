@@ -8,6 +8,10 @@ type InputProps = {
 
 function TodoInput(props: InputProps) {
 	const { onChange, todo, handleCreateTodo } = props;
+
+	const handleNoTodo = () => {
+		alert('todo를 입력해주세요.');
+	};
 	return (
 		<TodoInputBox>
 			<TodoInputFormWrapper>
@@ -18,7 +22,7 @@ function TodoInput(props: InputProps) {
 					onChange={onChange}
 					value={todo}
 				/>
-				<button data-testid="new-todo-add-button" onClick={handleCreateTodo}>
+				<button data-testid="new-todo-add-button" onClick={todo ? handleCreateTodo : handleNoTodo}>
 					<img src={process.env.PUBLIC_URL + '/assets/send.svg'} alt="전송 아이콘" />
 				</button>
 			</TodoInputFormWrapper>
