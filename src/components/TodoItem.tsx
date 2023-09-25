@@ -7,6 +7,7 @@ import { TodosType } from '../types/todosType';
 type TodoItemProps = {
 	todoData: TodoItemType;
 	setTodos: React.Dispatch<React.SetStateAction<TodosType>>;
+	setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type IsCompletedProp = {
@@ -14,7 +15,7 @@ type IsCompletedProp = {
 };
 
 function TodoItem(props: TodoItemProps) {
-	const { todoData, setTodos } = props;
+	const { todoData, setTodos, setOpenModal } = props;
 	const { id, todo, isCompleted } = todoData;
 	const [newTodo, setNewTodo] = useState(todo);
 	const [isEdit, setIsEdit] = useState(0);
@@ -78,7 +79,7 @@ function TodoItem(props: TodoItemProps) {
 						<UpdateBtn className="button" data-testid="modify-button" onClick={() => setIsEdit(id)}>
 							<img src={process.env.PUBLIC_URL + '/assets/edit.svg'} alt="수정 아이콘" />
 						</UpdateBtn>
-						<DeleteBtn className="button" data-testid="delete-button" onClick={() => handleDeleteTodo(id)}>
+						<DeleteBtn className="button" data-testid="delete-button" onClick={() => setOpenModal(true)}>
 							<img src={process.env.PUBLIC_URL + '/assets/delete.svg'} alt="삭제 아이콘" />
 						</DeleteBtn>
 					</>

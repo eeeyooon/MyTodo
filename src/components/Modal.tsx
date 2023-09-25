@@ -1,12 +1,19 @@
 import styled from 'styled-components';
 
-function Modal() {
+type ModalProp = {
+	setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+function Modal(props: ModalProp) {
+	const { setOpenModal } = props;
 	return (
 		<ModalWrapper>
 			<p>할 일을 삭제하시겠습니까?</p>
 			<BtnWrapper>
 				<button className="deleteBtn">삭제</button>
-				<button className="cancelBtn">취소</button>
+				<button onClick={() => setOpenModal(false)} className="cancelBtn">
+					취소
+				</button>
 			</BtnWrapper>
 		</ModalWrapper>
 	);
@@ -24,6 +31,7 @@ const ModalWrapper = styled.div`
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	color: #1c1c1c;
 	justify-content: center;
+	background-color: #ffffff;
 
 	p {
 		font-size: ${({ theme }) => theme.fontSize['lg']};

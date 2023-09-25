@@ -7,6 +7,7 @@ import { createTodoApi, getTodosApi } from '../utils/api';
 import { TodoItemType } from '../types/todoItemType';
 import { TodosType } from '../types/todosType';
 import axiosInstance from '../utils/instance';
+import Modal from '../components/Modal';
 
 function TodoList() {
 	const token = localStorage.getItem('access_token');
@@ -14,6 +15,7 @@ function TodoList() {
 	const user = localStorage.getItem('userEmail');
 	const [todo, setTodo] = useState('');
 	const [todos, setTodos] = useState<TodosType>([]);
+	const [openModal, setOpenModal] = useState(false);
 
 	useEffect(() => {
 		if (token) {
@@ -36,24 +38,32 @@ function TodoList() {
 	};
 
 	return (
-		<TodoListWrapper>
-			<TodoHeaderWrapper>
-				<TodoHeader>Todo List</TodoHeader>
-				<p>{user}</p>
-			</TodoHeaderWrapper>
-			<TodoItemWrapper>
-				{todos.map((todoItem: TodoItemType) => {
-					return <TodoItem key={todoItem.id} todoData={todoItem} setTodos={setTodos} />;
-				})}
-			</TodoItemWrapper>
-			<TodoInputWrapper>
-				<TodoInput
-					todo={todo}
-					handleCreateTodo={handleCreateTodo}
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTodo(e.target.value)}
-				/>
-			</TodoInputWrapper>
-		</TodoListWrapper>
+		<>
+			<TodoListWrapper>
+				{openModal && <ModalBackground />}
+				<TodoHeaderWrapper>
+					<TodoHeader>Todo List</TodoHeader>
+					<p>{user}</p>
+				</TodoHeaderWrapper>
+				<TodoItemWrapper>
+					{todos.map((todoItem: TodoItemType) => {
+						return <TodoItem key={todoItem.id} todoData={todoItem} setTodos={setTodos} setOpenModal={setOpenModal} />;
+					})}
+				</TodoItemWrapper>
+				<TodoInputWrapper>
+					<TodoInput
+						todo={todo}
+						handleCreateTodo={handleCreateTodo}
+						onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTodo(e.target.value)}
+					/>
+				</TodoInputWrapper>
+				{openModal && (
+					<ModalWrapper>
+						<Modal setOpenModal={setOpenModal} />
+					</ModalWrapper>
+				)}
+			</TodoListWrapper>
+		</>
 	);
 }
 
@@ -66,6 +76,7 @@ const TodoListWrapper = styled.div`
 	display: flex;
 	flex-flow: column nowrap;
 	align-items: center;
+	position: relative;
 `;
 
 const TodoHeaderWrapper = styled.div`
@@ -104,4 +115,20 @@ const TodoItemWrapper = styled.div`
 
 const TodoInputWrapper = styled.div`
 	height: 145px;
+`;
+
+const ModalBackground = styled.div`
+	background-color: #a8a8a8;
+	position: fixed;
+	width: 375px;
+	height: 812px;
+	opacity: 0.65;
+	z-index: 10;
+`;
+
+const ModalWrapper = styled.div`
+	z-index: 20;
+	position: absolute;
+	transform: translate(0, 0);
+	top: 45%;
 `;
