@@ -40,7 +40,7 @@ function TodoList() {
 	return (
 		<>
 			<TodoListWrapper>
-				{openModal && <ModalBackground />}
+				{openModal && <ModalBackground onClick={() => setOpenModal(false)} />}
 				<TodoHeaderWrapper>
 					<TodoHeader>Todo List</TodoHeader>
 					<p>{user}</p>
@@ -54,6 +54,7 @@ function TodoList() {
 					<TodoInput
 						todo={todo}
 						handleCreateTodo={handleCreateTodo}
+						setOpenModal={setOpenModal}
 						onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTodo(e.target.value)}
 					/>
 				</TodoInputWrapper>
