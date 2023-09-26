@@ -70,7 +70,16 @@ function SignForm(props: SignFormProps) {
 				axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${res.data.access_token}`;
 				navigate('/todo');
 			})
-			.catch((e) => console.error(e));
+			.catch((e) => {
+				console.error(e);
+				setErrMsg(
+					e.response.status === 401
+						? '이메일과 비밀번호가 유효하지 않습니다.'
+						: e.response.status === 404
+						? '존재하지 않는 이메일입니다.'
+						: '로그인에 실패하였습니다.',
+				);
+			});
 	};
 
 	return (
