@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { TodoItemType } from '../types/todoItemType';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { deleteTodoApi, getTodosApi, updateTodoApi } from '../utils/api';
 import { TodosType } from '../types/todosType';
 
@@ -9,6 +9,8 @@ type TodoItemProps = {
 	setTodos: React.Dispatch<React.SetStateAction<TodosType>>;
 	setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 	setModalContent: React.Dispatch<React.SetStateAction<string>>;
+	setModalStatus: React.Dispatch<React.SetStateAction<boolean>>;
+	modalStatus: boolean;
 };
 
 type IsCompletedProp = {
@@ -16,16 +18,35 @@ type IsCompletedProp = {
 };
 
 function TodoItem(props: TodoItemProps) {
-	const { todoData, setTodos, setOpenModal, setModalContent } = props;
+	const { todoData, setTodos, setOpenModal, setModalContent, modalStatus, setModalStatus } = props;
 	const { id, todo, isCompleted } = todoData;
 	const [newTodo, setNewTodo] = useState(todo);
 	const [isEdit, setIsEdit] = useState(0);
+	const [targetId, setTargetId] = useState(0);
+
+	const handleDelete = (id: number) => {
+		setOpenModal(true);
+		setModalContent('삭제');
+		setTargetId(id);
+	};
+
+	useEffect(() => {
+		if (modalStatus && targetId !== 0) {
+			handleDeleteTodo(targetId);
+			setModalStatus(false);
+		}
+	}, [modalStatus, targetId]);
 
 	const handleDeleteTodo = (id: number) => {
 		deleteTodoApi(id)
 			.then(() =>
 				getTodosApi()
-					.then((res) => setTodos(res.data))
+					.then((res) => {
+						{
+							setTodos(res.data);
+							setOpenModal(false);
+						}
+					})
 					.catch((e) => console.error(e)),
 			)
 			.catch((e) => console.error(e));
@@ -80,7 +101,13 @@ function TodoItem(props: TodoItemProps) {
 						<UpdateBtn className="button" data-testid="modify-button" onClick={() => setIsEdit(id)}>
 							<img src={process.env.PUBLIC_URL + '/assets/edit.svg'} alt="수정 아이콘" />
 						</UpdateBtn>
-						<DeleteBtn className="button" data-testid="delete-button" onClick={() => setOpenModal(true)}>
+						<DeleteBtn
+							className="button"
+							data-testid="delete-button"
+							onClick={() => {
+								handleDelete(id);
+							}}
+						>
 							<img src={process.env.PUBLIC_URL + '/assets/delete.svg'} alt="삭제 아이콘" />
 						</DeleteBtn>
 					</>

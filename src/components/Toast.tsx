@@ -15,8 +15,7 @@ const ToastWrapper = styled.div`
 	width: 311px;
 	height: 55px;
 	border-radius: 15px;
-	background-color: #fff;
-	background-color: rgba(0, 85, 255, 0.6);
+	background-color: #2e74ff;
 	color: #fff;
 	text-align: center;
 	line-height: 55px;

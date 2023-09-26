@@ -72,6 +72,8 @@ function TodoList() {
 								setTodos={setTodos}
 								setModalContent={setModalContent}
 								setOpenModal={setOpenModal}
+								setModalStatus={setModalStatus}
+								modalStatus={modalStatus}
 							/>
 						);
 					})}
@@ -87,7 +89,7 @@ function TodoList() {
 				</TodoInputWrapper>
 				{openModal && (
 					<ModalWrapper>
-						<Modal modalContent={modalContent} setOpenModal={setOpenModal} />
+						<Modal modalContent={modalContent} setOpenModal={setOpenModal} setModalStatus={setModalStatus} />
 					</ModalWrapper>
 				)}
 				{openToast && (
