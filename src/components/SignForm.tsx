@@ -5,6 +5,8 @@ import { signinApi, signupApi } from '../utils/api';
 import isEmailValid from '../utils/isEmailValid';
 import isPasswordVaild from '../utils/isPasswordVaild';
 import axiosInstance from '../utils/instance';
+import Modal from './Modal';
+import Toast from './Toast';
 
 type SignFormProps = {
 	page: string;
@@ -16,12 +18,31 @@ function SignForm(props: SignFormProps) {
 	const navigate = useNavigate();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [errMsg, setErrMsg] = useState('');
+	const [openToast, setOpenToast] = useState(false);
 
 	const token = localStorage.getItem('access_token');
 
 	useEffect(() => {
 		if (token) navigate('/todo');
 	}, [token]);
+
+	useEffect(() => {
+		if (errMsg.length > 0) {
+			setOpenToast(true);
+		}
+	}, [errMsg]);
+
+	useEffect(() => {
+		if (openToast) {
+			const timer = setTimeout(() => {
+				setOpenToast(false);
+				setErrMsg('');
+			}, 1500);
+
+			return () => clearTimeout(timer);
+		}
+	}, [openToast]);
 
 	const handleSignup = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
@@ -33,7 +54,10 @@ function SignForm(props: SignFormProps) {
 				alert(res.status === 201 ? '회원가입을 성공하였습니다.' : '회원가입을 실패하였습니다.');
 				navigate('/signin');
 			})
-			.catch((e) => console.error(e.response.data.message));
+			.catch((e) => {
+				console.error(e.response.data.message);
+				setErrMsg(e.response.data.message);
+			});
 	};
 
 	const handleSignin = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -51,6 +75,13 @@ function SignForm(props: SignFormProps) {
 
 	return (
 		<SignFormWrapper>
+			{openToast && (
+				<ModalBackground
+					onClick={() => {
+						setOpenToast(false);
+					}}
+				/>
+			)}
 			<SignupHeader>{page === 'signin' ? 'Sign In' : 'Sign Up'}</SignupHeader>
 			<SignFormBox>
 				<FormBox>
@@ -96,6 +127,11 @@ function SignForm(props: SignFormProps) {
 					{page === 'signin' ? 'signup' : 'signin'}
 				</NavBtn>
 			</NavSign>
+			{openToast && (
+				<ToastWrapper>
+					<Toast modalContent={errMsg} />
+				</ToastWrapper>
+			)}
 		</SignFormWrapper>
 	);
 }
@@ -196,4 +232,20 @@ const ErrorMsg = styled.p`
 	padding-top: 5px;
 	height: 25px;
 	color: rgba(0, 85, 255, 0.8);
+`;
+
+const ToastWrapper = styled.div`
+	z-index: 20;
+	position: absolute;
+	transform: translate(0, 0);
+	top: 35%;
+`;
+
+const ModalBackground = styled.div`
+	background-color: #a8a8a8;
+	position: fixed;
+	width: 375px;
+	height: 812px;
+	opacity: 0.65;
+	z-index: 10;
 `;
