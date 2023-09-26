@@ -2,13 +2,14 @@ import styled from 'styled-components';
 
 type ModalProp = {
 	setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+	modalContent: string;
 };
 
 function Modal(props: ModalProp) {
-	const { setOpenModal } = props;
+	const { setOpenModal, modalContent } = props;
 	return (
 		<ModalWrapper>
-			<p>할 일을 삭제하시겠습니까?</p>
+			<p>{modalContent}</p>
 			<BtnWrapper>
 				<button className="deleteBtn">삭제</button>
 				<button onClick={() => setOpenModal(false)} className="cancelBtn">

@@ -8,6 +8,7 @@ import { TodoItemType } from '../types/todoItemType';
 import { TodosType } from '../types/todosType';
 import axiosInstance from '../utils/instance';
 import Modal from '../components/Modal';
+import Toast from './../components/Toast';
 
 function TodoList() {
 	const token = localStorage.getItem('access_token');
@@ -16,6 +17,9 @@ function TodoList() {
 	const [todo, setTodo] = useState('');
 	const [todos, setTodos] = useState<TodosType>([]);
 	const [openModal, setOpenModal] = useState(false);
+	const [modalContent, setModalContent] = useState('');
+	const [modalStatus, setModalStatus] = useState(false);
+	const [openToast, setOpenToast] = useState(false);
 
 	useEffect(() => {
 		if (token) {
@@ -30,6 +34,14 @@ function TodoList() {
 		}
 	}, [token]);
 
+	useEffect(() => {
+		if (openToast) {
+			const timer = setTimeout(() => setOpenToast(false), 1000);
+
+			return () => clearTimeout(timer);
+		}
+	}, [openToast]);
+
 	const handleCreateTodo = () => {
 		createTodoApi(todo).then(() => {
 			setTodo('');
@@ -40,28 +52,48 @@ function TodoList() {
 	return (
 		<>
 			<TodoListWrapper>
-				{openModal && <ModalBackground onClick={() => setOpenModal(false)} />}
+				{openModal && (
+					<ModalBackground
+						onClick={() => {
+							setOpenModal(false);
+						}}
+					/>
+				)}
 				<TodoHeaderWrapper>
 					<TodoHeader>Todo List</TodoHeader>
 					<p>{user}</p>
 				</TodoHeaderWrapper>
 				<TodoItemWrapper>
 					{todos.map((todoItem: TodoItemType) => {
-						return <TodoItem key={todoItem.id} todoData={todoItem} setTodos={setTodos} setOpenModal={setOpenModal} />;
+						return (
+							<TodoItem
+								key={todoItem.id}
+								todoData={todoItem}
+								setTodos={setTodos}
+								setModalContent={setModalContent}
+								setOpenModal={setOpenModal}
+							/>
+						);
 					})}
 				</TodoItemWrapper>
 				<TodoInputWrapper>
 					<TodoInput
 						todo={todo}
 						handleCreateTodo={handleCreateTodo}
-						setOpenModal={setOpenModal}
+						setOpenToast={setOpenToast}
+						setModalContent={setModalContent}
 						onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTodo(e.target.value)}
 					/>
 				</TodoInputWrapper>
 				{openModal && (
 					<ModalWrapper>
-						<Modal setOpenModal={setOpenModal} />
+						<Modal modalContent={modalContent} setOpenModal={setOpenModal} />
 					</ModalWrapper>
+				)}
+				{openToast && (
+					<ToastWrapper>
+						<Toast modalContent={modalContent} />
+					</ToastWrapper>
 				)}
 			</TodoListWrapper>
 		</>
@@ -128,6 +160,13 @@ const ModalBackground = styled.div`
 `;
 
 const ModalWrapper = styled.div`
+	z-index: 20;
+	position: absolute;
+	transform: translate(0, 0);
+	top: 45%;
+`;
+
+const ToastWrapper = styled.div`
 	z-index: 20;
 	position: absolute;
 	transform: translate(0, 0);

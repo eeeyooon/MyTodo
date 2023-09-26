@@ -8,6 +8,7 @@ type TodoItemProps = {
 	todoData: TodoItemType;
 	setTodos: React.Dispatch<React.SetStateAction<TodosType>>;
 	setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+	setModalContent: React.Dispatch<React.SetStateAction<string>>;
 };
 
 type IsCompletedProp = {
@@ -15,7 +16,7 @@ type IsCompletedProp = {
 };
 
 function TodoItem(props: TodoItemProps) {
-	const { todoData, setTodos, setOpenModal } = props;
+	const { todoData, setTodos, setOpenModal, setModalContent } = props;
 	const { id, todo, isCompleted } = todoData;
 	const [newTodo, setNewTodo] = useState(todo);
 	const [isEdit, setIsEdit] = useState(0);

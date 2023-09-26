@@ -4,14 +4,16 @@ type InputProps = {
 	onChange: React.ChangeEventHandler<HTMLInputElement>;
 	todo: string;
 	handleCreateTodo: () => void;
-	setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+	setOpenToast: React.Dispatch<React.SetStateAction<boolean>>;
+	setModalContent: React.Dispatch<React.SetStateAction<string>>;
 };
 
 function TodoInput(props: InputProps) {
-	const { onChange, todo, handleCreateTodo, setOpenModal } = props;
+	const { onChange, todo, handleCreateTodo, setOpenToast, setModalContent } = props;
 
 	const handleNoTodo = () => {
-		setOpenModal(true);
+		setOpenToast(true);
+		setModalContent('할 일을 입력해주세요.');
 	};
 	return (
 		<TodoInputBox>
