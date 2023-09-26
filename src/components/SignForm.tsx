@@ -5,7 +5,6 @@ import { signinApi, signupApi } from '../utils/api';
 import isEmailValid from '../utils/isEmailValid';
 import isPasswordVaild from '../utils/isPasswordVaild';
 import axiosInstance from '../utils/instance';
-import Modal from './Modal';
 import Toast from './Toast';
 
 type SignFormProps = {
@@ -18,7 +17,7 @@ function SignForm(props: SignFormProps) {
 	const navigate = useNavigate();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [errMsg, setErrMsg] = useState('');
+	const [toastMsg, setToastMsg] = useState('');
 	const [openToast, setOpenToast] = useState(false);
 
 	const token = localStorage.getItem('access_token');
@@ -28,35 +27,37 @@ function SignForm(props: SignFormProps) {
 	}, [token]);
 
 	useEffect(() => {
-		if (errMsg.length > 0) {
+		if (toastMsg.length > 0) {
 			setOpenToast(true);
 		}
-	}, [errMsg]);
+	}, [toastMsg]);
 
 	useEffect(() => {
 		if (openToast) {
 			const timer = setTimeout(() => {
 				setOpenToast(false);
-				setErrMsg('');
+				if (toastMsg === '회원가입을 성공하였습니다.') {
+					setToastMsg('');
+					navigate('/signin');
+				} else {
+					setToastMsg('');
+				}
 			}, 1500);
 
 			return () => clearTimeout(timer);
 		}
-	}, [openToast]);
+	}, [navigate, openToast, toastMsg]);
 
 	const handleSignup = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 
 		await signupApi({ email, password })
 			.then((res) => {
-				console.log(email, password);
-				console.log(res.status === 201 ? '회원가입을 성공하였습니다.' : '회원가입을 실패하였습니다.');
-				alert(res.status === 201 ? '회원가입을 성공하였습니다.' : '회원가입을 실패하였습니다.');
-				navigate('/signin');
+				setToastMsg(res.status === 201 ? '회원가입을 성공하였습니다.' : '회원가입을 실패하였습니다.');
 			})
 			.catch((e) => {
 				console.error(e.response.data.message);
-				setErrMsg(e.response.data.message);
+				setToastMsg(e.response.data.message);
 			});
 	};
 
@@ -72,7 +73,7 @@ function SignForm(props: SignFormProps) {
 			})
 			.catch((e) => {
 				console.error(e);
-				setErrMsg(
+				setToastMsg(
 					e.response.status === 401
 						? '이메일과 비밀번호가 유효하지 않습니다.'
 						: e.response.status === 404
@@ -138,7 +139,7 @@ function SignForm(props: SignFormProps) {
 			</NavSign>
 			{openToast && (
 				<ToastWrapper>
-					<Toast modalContent={errMsg} />
+					<Toast modalContent={toastMsg} />
 				</ToastWrapper>
 			)}
 		</SignFormWrapper>

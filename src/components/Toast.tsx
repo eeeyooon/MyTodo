@@ -13,7 +13,7 @@ export default Toast;
 
 const ToastWrapper = styled.div`
 	width: 311px;
-	height: 55px;
+	height: 50px;
 	border-radius: 15px;
 	background-color: #2e74ff;
 	color: #fff;

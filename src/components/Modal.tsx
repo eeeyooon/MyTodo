@@ -10,7 +10,7 @@ function Modal(props: ModalProp) {
 	const { setOpenModal, modalContent, setModalStatus } = props;
 	return (
 		<ModalWrapper>
-			<p>할 일을 {modalContent}하시겠습니까</p>
+			<p>할 일을 {modalContent}하시겠습니까?</p>
 			<BtnWrapper>
 				<button className="deleteBtn" onClick={() => setModalStatus(true)}>
 					{modalContent}
