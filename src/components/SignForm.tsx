@@ -102,7 +102,7 @@ function SignForm(props: SignFormProps) {
 							id="email-input"
 							data-testid="email-input"
 							onChange={(e) => setEmail(e.target.value)}
-							placeholder="example@gamil.com"
+							placeholder="example@gmail.com"
 						/>
 						{email && !isEmailValid(email) ? <ErrorMsg>이메일 형식을 확인해주세요.</ErrorMsg> : null}
 					</InputWrapper>
